@@ -1,25 +1,46 @@
 <?php
 
+    require "Pessoa.class.php";
+    $pessoa = new Pessoa();
+
     if (isset($_POST['cadastrarPessoa'])) {
         $nome = (isset($_POST['nome'])) ? $_POST['nome'] : null;
         $idade = (isset($_POST['idade'])) ? $_POST['idade'] : null;
 
-        echo $nome." FOI CADASTRADO COM SUCESSO";
+        $pessoa->cadastrar($nome, $idade);
     }
 
     if (isset($_GET['listarPessoas'])) {
-        // consulta 
-        $dados["pessoas"][0]["nome"] = "Pedro";
-        $dados["pessoas"][0]["idade"] = 19;
+        $dados = $pessoa->listar();
 
-        $dados["pessoas"][1]["nome"] = "João";
-        $dados["pessoas"][1]["idade"] = 12;
-
-        foreach ($dados["pessoas"] as $pessoa) {
-            echo "<tr>
+        foreach ($dados as $pessoa) {
+            echo "
+                <tr>
                     <td>" . $pessoa["nome"] . "</td>
                     <td>" . $pessoa["idade"] . "</td>
+                    <td onclick='deletarPessoa(".$pessoa["id"].")'>Excluir</td>
+                    <td onclick='consultarPessoa(".$pessoa["id"].")'>Editar</td>
                 </tr>
-                ";
+            ";
         }
+    }
+
+    if (isset($_POST['deletarPessoa'])) {
+        $id = (isset($_POST['id'])) ? $_POST['id'] : null;
+
+        $pessoa->deletar($id);
+    }
+
+    if (isset($_POST['editarPessoa'])) {
+        $id = (isset($_POST['id'])) ? $_POST['id'] : null;
+        $nome = (isset($_POST['nome'])) ? $_POST['nome'] : null;
+        $idade = (isset($_POST['idade'])) ? $_POST['idade'] : null;
+
+        $pessoa->editar($id, $nome, $idade);
+    }
+
+    if (isset($_GET['consultarPessoa'])) {
+        $id = (isset($_GET['id'])) ? $_GET['id'] : null;
+
+        $pessoa->consultar($id);
     }
