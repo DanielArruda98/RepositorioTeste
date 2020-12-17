@@ -8,7 +8,7 @@ function redirecionar(e, pagina, titulo) {
 }
 
 $("#p1").click(function(e) {
-    redirecionar(e, "pagina1.html", "Página 1");
+    redirecionar(e, "pagina1.html", "Página 1 - 17/12");
 });
 
 $("#p2").click(function(e) {
